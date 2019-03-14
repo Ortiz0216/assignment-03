@@ -1,3 +1,70 @@
+# Pizza Bandit II Notes
+
+Things we need and why we need them:
+
+* __Bootstrap__ will be used for creating styles and look-and-feel for our pages
+* __jQuery__ is needed by Bootstrap
+* __Popper.js__ is also needed by Bootstrap
+* __Mapbox GL__ and __React Mapbox GL__ a free-(ish) map solution
+* __Dotenv__ is for storing API KEYS that our app uses rather than hard-coding them into our repository.  (see note below)
+* __Here API__ a service for mapping, location, places, georeferencing and other similar services
+* __Firebase API__ a service for many SaaS/Paas needs including authentication and storage.
+
+DOTENV note: The ENV features are built into create-react-app now.  See [Adding Custom Environment Variables](https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables) for more.
+
+## PROCEDURES
+
+The things we need to do then are:
+
+1. Run `create-react-app`
+2. Add in additional packages:
+    * Bootstrap: `npm install --save bootstrap`
+    * jQuery: `npm install --save jquery`
+    * Popper.js: `npm install --save popper.js`
+    * mapbox gl: `npm install --save mapbox-gl`
+    * react mapbox gl: `npm install --save react-mapbox-gl`
+    * dotenv: `npm install --save dotenv`
+    * firebase: `npm install --save firebase`
+3. Update `index.js` and `App.js` to include resources from bootstrap and jquery
+4. Create additional ReactJS Components
+    * Login Form
+        * Email Input
+        * Password Input
+    * Map
+    * Pizza Listing
+    * Pizza Ordering
+5. [Store Environment Variables in DOTENV](https://facebook.github.io/create-react-app/docs/adding-custom-environment-variables) - a feature of `create-react-app`
+6. Mapbox
+    * Create an account at [Mapbox](https://www.mapbox.com/) to obtain an access key
+    * Read up on [Mapbox-GL JS](https://docs.mapbox.com/mapbox-gl-js/api/)
+    * Include mapbox styles in `index.js`
+7. Obtain your location using your browser's [Geolocation](https://www.w3schools.com/html/html5_geolocation.asp)
+    * use the [ReactJS lifecycle methods](https://reactjs.org/docs/react-component.html#the-component-lifecycle) to configure the Mapbox when your Component loads
+    * set state variables to assist configuring the map
+8. Use the Here API to find nearby places
+    * Obtain API Keys - store in your `.env` file
+    * Install `POSTMAN` or use `curl` (comes with git-bash) to test your API calls
+    * Use [fetch](https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api) to read REST calls into your app
+    * Use [ReactJS lifecycle methods](https://reactjs.org/docs/react-component.html#the-component-lifecycle) to configure your REST call when your Component loads
+9. Load up your nearby places from the HERE API into [Bootstrap Cards](https://getbootstrap.com/docs/4.3/components/card/)
+10. Use Firebase
+11. Use React Router to make different *pages* for your app
+
+### Bootstrap your App with create-react-app
+
+[Create React App](https://reactjs.org/docs/create-a-new-react-app.html) is a toolchain that assists in:
+
+* package manaegement
+* project structuring
+* site packaging and builing
+* live testing
+
+It is a common approach to creating a ReactJS app.
+
+---
+
+# Create React App Notes
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
