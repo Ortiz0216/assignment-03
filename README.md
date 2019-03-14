@@ -1,4 +1,4 @@
-# Pizza Bandit II Notes
+# Pizza Bandit Firebase Notes
 
 Things we need and why we need them:
 
