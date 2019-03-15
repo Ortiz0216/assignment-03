@@ -23,7 +23,7 @@ const EmailInput = (props) => {
             onChange={onEmailChange}
             placeholder="Enter email"
             type="email"
-            value={email}  />
+            value={props.email}  />
         </div>
     );
 };

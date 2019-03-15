@@ -6,6 +6,9 @@ const PasswordInput = (props) => {
 
     const onPasswordChange = (event) => {
         password = event.target.value;
+
+        props.onPasswordInputChange(password);
+
     }
 
     return(
@@ -16,7 +19,7 @@ const PasswordInput = (props) => {
                onChange={onPasswordChange}
                placeholder="Password" 
                type="password"
-               value={password}  />
+               value={props.password}  />
         </div>
     );
 

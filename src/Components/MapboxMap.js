@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import ReactMapboxGl, {Layer,Feature} from 'react-mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
+const component_name = "MAPBOX COMPONENT";
+
 const Map = ReactMapboxGl({
     accessToken: process.env.REACT_APP_MAPBOX_API_ACCESS_TOKEN,
 });
@@ -11,6 +13,7 @@ class MapboxMap extends Component {
     constructor(props) {
         super(props);
 
+        //mapbox API styles
         const mapstyles = ["basic", "streets", "bright", "light", "dark", "satellite"];
 
         this.app_name = "Pizza Bandit";
@@ -41,10 +44,11 @@ class MapboxMap extends Component {
                 );
             });
         }else{
-            console.log("Geolocation is not supported by this browser.");
+            console.log(component_name, "Geolocation is not supported by this browser.");
         }
     }
 
+    //run prior to mounting - useful to get initial LAT/LON from browser
     componentWillMount(){
         //get location from browser
         this.setCurrentLocation();
@@ -52,9 +56,6 @@ class MapboxMap extends Component {
 
     //lifecycle method
     componentDidMount(){
-
-
-
         //lift lat/lng state
         const coords = { 
             lat: this.state.lat,
@@ -70,8 +71,8 @@ class MapboxMap extends Component {
         if lat or lon changed */
         if(this.state.lat !== prevState.lat || this.state.lng !== prevState.lng){
 
-            console.log(`Previous Lat: ${prevState.lat} and Prevous Lon:${prevState.lng}`);
-            console.log(`Current Lat: ${this.state.lat} and Current Lon:${this.state.lng}`);
+            console.log(component_name, `Previous Lat: ${prevState.lat} and Prevous Lon:${prevState.lng}`);
+            console.log(component_name, `Current Lat: ${this.state.lat} and Current Lon:${this.state.lng}`);
 
             //lift lat/lng state
             const coords = { 

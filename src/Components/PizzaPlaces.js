@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import PizzaPlace from './PizzaPlace';
 
+const component_name = "PIZZA_PLACES COMPONENT";
 
 class PizzaPlaces extends Component{
 
@@ -18,7 +19,7 @@ class PizzaPlaces extends Component{
     componentDidMount(){
         //make rest call
         //this.getPizzaPlacesFromHereAPI();
-        console.log(`LatLon properties from parent at PizzaPlaces Component Mount: LAT ${this.props.coords.lat} LON: ${this.props.coords.lng}`);
+        console.log(component_name, `LatLon properties from parent at PizzaPlaces Component Mount: LAT ${this.props.coords.lat} LON: ${this.props.coords.lng}`);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot){
@@ -27,8 +28,8 @@ class PizzaPlaces extends Component{
         if lat or lon changed */
         if(this.props.coords.lat !== prevProps.coords.lat || this.props.coords.lng !== prevProps.coords.lng){
 
-            console.log(`Previous Lat: ${prevProps.coords.lat} and Prevous Lon:${prevProps.lng}`);
-            console.log(`Current Lat: ${this.props.coords.lat} and Current Lon:${this.props.coords.lng}`);
+            console.log(component_name, `Previous Lat: ${prevProps.coords.lat} and Prevous Lon:${prevProps.coords.lng}`);
+            console.log(component_name, `Current Lat: ${this.props.coords.lat} and Current Lon:${this.props.coords.lng}`);
 
             //make rest call
             this.getPizzaPlacesFromHereAPI();    
@@ -85,10 +86,9 @@ class PizzaPlaces extends Component{
                                       pizza_place.vicinity + ' ' +
                                       pizza_place.category;
     
-                console.log(pizzalocation);
+                //console.log(component_name, pizzalocation);
               }
             );
-            console.log(this.state.pizza_place_list[2].title);
           })
           .catch(error => console.error(error));
     }    

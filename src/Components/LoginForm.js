@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import EmailInput from './EmailInput';
 import PasswordInput from './PasswordInput';
 
+const component_name = "LOGIN_FORM COMPONENT";
+
 class LoginForm extends Component {
 
     //constructor
@@ -22,7 +24,7 @@ class LoginForm extends Component {
     //method to receive lifted Email state from child
     onEmailChange(email){
         
-        console.log("Email from the child: " + email);
+        console.log(component_name, "Email from the child: " + email);
 
         this.setState( () => {
                 return {
@@ -31,13 +33,13 @@ class LoginForm extends Component {
             }
         );
 
-        console.log("Password from the parent state: " + this.state.email);
+        console.log(component_name, "Email from the parent state: " + this.state.email);
     }
 
     //method to receive lifted Password state from child
     onPasswordChange(password){
         
-        console.log("From the child: " + password);
+        console.log(component_name, "From the child: " + password);
 
         this.setState( () => {
                 return {
@@ -46,7 +48,7 @@ class LoginForm extends Component {
             }
         );
 
-        console.log("Password from the parent state: " + this.state.password);
+        console.log(component_name, "Password from the parent state: " + this.state.password);
     }    
 
     onFormSubmit(event){
@@ -66,10 +68,12 @@ class LoginForm extends Component {
             }
         );
 
-        console.log(`LOGIN_FORM: ${user.email} has entered a password for authentication`);        
+        console.log(component_name, `${user.email} has entered a password for authentication`);        
 
         //this is also lifting state to the parent
         this.props.onFormSubmit(user);
+
+        //return false;
 
     }
 
@@ -78,8 +82,10 @@ class LoginForm extends Component {
             <div>
                 <h2>{this.props.form_name}</h2>
                 <form onSubmit={this.onFormSubmit}>
-                    <EmailInput onEmailInputChange={this.onEmailChange} />
-                    <PasswordInput onPasswordInputChange={this.onPasswordChange} />
+                    <EmailInput onEmailInputChange={this.onEmailChange}
+                                email={this.state.email} />
+                    <PasswordInput onPasswordInputChange={this.onPasswordChange}
+                                   password={this.state.password} />
                     <button type="submit" 
                             className="btn btn-primary">Login</button>
                 </form>
