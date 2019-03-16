@@ -13,6 +13,7 @@ const config = {
     messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID
 };
 
+//ensure that no more than one firebase is instantiated
 if (!firebase.apps.length) {
     let app = firebase.initializeApp(config);
 }

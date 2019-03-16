@@ -49,8 +49,13 @@ The things we need to do then are:
     * Use [fetch](https://developers.google.com/web/ilt/pwa/working-with-the-fetch-api) to read REST calls into your app
     * Use [ReactJS lifecycle methods](https://reactjs.org/docs/react-component.html#the-component-lifecycle) to configure your REST call when your Component loads
 9. Load up your nearby places from the HERE API into [Bootstrap Cards](https://getbootstrap.com/docs/4.3/components/card/)
-10. Use Firebase
-11. Use [React Router](https://www.npmjs.com/package/react-router) to make different *pages* for your app 
+10. Use [React Router](https://www.npmjs.com/package/react-router) to make different *pages* for your app 
+11. Use Firebase
+    * Authentication
+    * Cloud Database
+12. Use Redux for an MVC-like structure (modeled on Facebook's "Flux" architecture)
+13. Add tests (should have been done in Chapter 9)
+
 
 ### Bootstrap your App with create-react-app
 

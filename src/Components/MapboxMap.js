@@ -20,8 +20,8 @@ class MapboxMap extends Component {
         this.order_date = new Date();
 
         this.state = {
-            lng: -98.5795,
-            lat: 39.828175,
+            lng: this.props.coords.lng,
+            lat: this.props.coords.lat,
             mapstyle: mapstyles[Math.floor(Math.random() * mapstyles.length)],
         };
 

@@ -1,20 +1,22 @@
 //npm imports
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route, Link } from "react-router-dom";
 
 //my imports
 import JumbotronComponent from './Components/JumbotronComponent';
-import LoginForm from './Components/LoginForm';
-import LogoutForm from './Components/LogoutForm';
 import MapboxMap from './Components/MapboxMap';
 import Navbar from './Components/Navbar';
 import PizzaForm from './Components/PizzaForm';
 import PizzaPlaces from './Components/PizzaPlaces';
+import OrderHistory from './Components/OrderHistory';
 import firebase from './Firebase';
 import './App.css';
 
 const component_name = "APP COMPONENT";
 
+/**
+ * Entry point for the application
+ */
 class App extends Component {
     constructor(props) {
         super(props);
@@ -25,8 +27,8 @@ class App extends Component {
         
         //master app-level state
         this.state = {
-            lng: -98.5795,
-            lat: 39.828175,
+            lng: -98.5795,  //US geographic center lng
+            lat: 39.828175, //US geographic center lat
             user: {
                 uid: '',                
                 userEmail: '',
@@ -67,7 +69,8 @@ class App extends Component {
                     }
                 );
                 if(firebase.auth().currentUser){
-                    console.log(component_name, `${firebase.auth().currentUser.email} is logged in`);                    
+                    console.log(component_name, 
+                                `${firebase.auth().currentUser.email} is logged in`);                    
                 }                
                 
             } 
@@ -84,15 +87,52 @@ class App extends Component {
                         };
                     }
                 );
-                console.log(component_name, "AUTH_STATE_CHANGED", "nobody is logged in");
+                console.log(component_name, 
+                            "AUTH_STATE_CHANGED", "nobody is logged in");
 
             }
         });  
     }
 
+    // LIFECYCLE METHODS //////////////////////////////////////////////////////    
+    //run prior to mounting - useful to get initial LAT/LON from browser
+    componentWillMount(){
+        //get location from browser
+        this.setCurrentLocation();
+    }    
+
+    // UTILITIES //////////////////////////////////////////////////////////////
+    /**
+     * Gets current location from browser/user agent
+     */
+    setCurrentLocation(){
+        //check to see if we can get the browser's geolocation
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(position => {
+                //set state properties for lat and long
+                this.setState( () => {
+                        return {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        }
+                    }
+                );
+            });
+        }else{
+            console.log(component_name, 
+                        "Geolocation is not supported by this browser.");
+        }
+    }
+
+    // EVENT HANDLERS /////////////////////////////////////////////////////////
+    /**
+     * Called from children components for updated map coordinates
+     * @param {*} coords 
+     */
     handleMapCoordsUpdate(coords){
 
-        console.log(component_name, `Coords from child: LAT ${coords.lat} and LNG ${coords.lng}`)
+        console.log(component_name, 
+                    `Coords from child: LAT ${coords.lat} and LNG ${coords.lng}`)
 
         this.setState( () => {
                 return {
@@ -103,6 +143,10 @@ class App extends Component {
         );
     }
 
+    /**
+     * User email and password from child component - used to log into Firebase
+     * @param {*} user 
+     */
     handleLoginFormSubmission(user){
 
         const { email, password, } = user;
@@ -110,18 +154,24 @@ class App extends Component {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((user) => {
                 
-                console.log(component_name, `${firebase.auth().currentUser.email} is logged in`)     
+                console.log(component_name, 
+                            `${firebase.auth().currentUser.email} is logged in`)     
             })
             .catch(function(error) {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                console.log(component_name, `Error: ${errorCode} and Message: ${errorMessage}`);
+                console.log(component_name, 
+                            `Error: ${errorCode} and Message: ${errorMessage}`);
                 // ...
             });
 
     }
 
+    /**
+     * Logout from Firebase
+     * @param {*} user 
+     */
     handleLogoutFormSubmission(user){
 
         if(firebase.auth().currentUser){
@@ -151,7 +201,9 @@ class App extends Component {
     }
     
     // PAGES //////////////////////////////////////////////////////////////////
-    // HOME PAGE
+    /**
+     * HOME PAGE composite component
+     */
     HomePage() {
 
         //destructuring the state object
@@ -174,7 +226,9 @@ class App extends Component {
         );
     }
 
-    // ORDER PAGE    
+    /**
+     * ORDER PAGE composite component
+     */
     OrderPage() {
 
         //destructuring the state object
@@ -209,7 +263,9 @@ class App extends Component {
 
     }
 
-    // ABOUT PAGE    
+    /**
+     * ABOUT PAGE composite component
+     */
     AboutPage(){
 
         const bees = ["img/bee1.png","img/bee2.png","img/bee3.png","img/bee4.png","img/bee5.png"];
@@ -250,7 +306,8 @@ class App extends Component {
 
                     <Route path="/" exact component={this.HomePage} />
                     <Route path="/order" component={this.OrderPage} />
-                    <Route path="/about" component={this.AboutPage} />                    
+                    <Route path="/order" component={this.OrderHistory} />                    
+                    <Route path="/about" component={this.AboutPage} />
                 </div>
             </div>            
         );
