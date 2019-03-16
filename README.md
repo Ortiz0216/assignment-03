@@ -25,6 +25,7 @@ The things we need to do then are:
     * react mapbox gl: `npm install --save react-mapbox-gl`
     * dotenv: `npm install --save dotenv`
     * firebase: `npm install --save firebase`
+    * react-router: `npm install --save react-router`
 3. Update `index.js` and `App.js` to include resources from bootstrap and jquery
 4. Create additional ReactJS Components
     * Login Form
@@ -48,7 +49,7 @@ The things we need to do then are:
     * Use [ReactJS lifecycle methods](https://reactjs.org/docs/react-component.html#the-component-lifecycle) to configure your REST call when your Component loads
 9. Load up your nearby places from the HERE API into [Bootstrap Cards](https://getbootstrap.com/docs/4.3/components/card/)
 10. Use Firebase
-11. Use React Router to make different *pages* for your app
+11. Use [React Router](https://www.npmjs.com/package/react-router) to make different *pages* for your app 
 
 ### Bootstrap your App with create-react-app
 
