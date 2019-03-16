@@ -15,10 +15,10 @@ const EmailInput = (props) => {
 
     return(
         <div className="form-group">
-        <label htmlFor="exampleInputEmail1">Email address</label>
+        {/* <label className="mr-sm-2" htmlFor="exampleInputEmail1">Email address</label> */}
         <input 
             aria-describedby="emailHelp" 
-            className="form-control" 
+            className="form-control input-sm mb-2 mr-sm-2" 
             id="exampleInputEmail1" 
             onChange={onEmailChange}
             placeholder="Enter email"

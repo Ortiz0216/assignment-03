@@ -26,6 +26,7 @@ The things we need to do then are:
     * dotenv: `npm install --save dotenv`
     * firebase: `npm install --save firebase`
     * react-router: `npm install --save react-router`
+    * react-router-dom: `npm install --save react-router-dom`
 3. Update `index.js` and `App.js` to include resources from bootstrap and jquery
 4. Create additional ReactJS Components
     * Login Form
@@ -52,6 +53,8 @@ The things we need to do then are:
 11. Use [React Router](https://www.npmjs.com/package/react-router) to make different *pages* for your app 
 
 ### Bootstrap your App with create-react-app
+
+npm install --save react-router-dom
 
 [Create React App](https://reactjs.org/docs/create-a-new-react-app.html) is a toolchain that assists in:
 

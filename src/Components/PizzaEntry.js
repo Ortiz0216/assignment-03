@@ -6,8 +6,11 @@ class PizzaEntry extends Component {
     constructor(props){
         super(props);
 
+        this.prices = [4.99, 5.99, 6.99, 7.99];        
+
         this.state = {
             selected_pizza: '',
+            selected_pizza_price: this.prices[Math.floor(Math.random() * this.prices.length)],
             style_value: 'btn btn-lg btn-block btn-primary',
         };
 
@@ -38,6 +41,7 @@ class PizzaEntry extends Component {
                 <div className="card-body">
                     <h5 className="card-title">{this.props.pizza_type} Pizza</h5>
                     <p className="card-text">A tasty {this.props.pizza_type} Pizza from a local provider.</p>
+                    <p className="card-text text-center"><strong>YOUR PRICE:</strong> ${this.state.selected_pizza_price}</p>
                     <button className={this.state.style_value}
                             onClick={this.handleSelectedPizzaButtonClick}
                             value={selected_pizza} >

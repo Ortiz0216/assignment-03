@@ -46,14 +46,13 @@ class LogoutForm extends Component {
         }
 
         return (
-            <div>
-                <h2>{this.props.form_name}</h2>
-                <form onSubmit={this.onFormSubmit}>
-                    <p>{current_user.email} is logged in</p>
+            <React.Fragment>
+                <form className="form form-inline ml-auto" onSubmit={this.onFormSubmit}>
+                    <span className="navbar-text align-middle"><p className="text-light mr-sm-2">{current_user.email}</p></span>
                     <button type="submit" 
-                            className="btn btn-primary">Logout</button>
+                            className="btn btn-primary mb-2 mr-sm-2">Logout</button>
                 </form>
-            </div>            
+            </React.Fragment>              
         );
     };
 }

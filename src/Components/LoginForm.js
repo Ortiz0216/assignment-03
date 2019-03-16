@@ -79,17 +79,16 @@ class LoginForm extends Component {
 
     render() {
         return (
-            <div>
-                <h2>{this.props.form_name}</h2>
-                <form onSubmit={this.onFormSubmit}>
+            <React.Fragment>
+                <form className="form form-inline ml-auto" onSubmit={this.onFormSubmit}>
                     <EmailInput onEmailInputChange={this.onEmailChange}
                                 email={this.state.email} />
                     <PasswordInput onPasswordInputChange={this.onPasswordChange}
                                    password={this.state.password} />
                     <button type="submit" 
-                            className="btn btn-primary">Login</button>
+                            className="btn btn-primary mb-2">Login</button>
                 </form>
-            </div>            
+            </React.Fragment>              
         );
     };
 }

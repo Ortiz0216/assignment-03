@@ -13,8 +13,8 @@ const PasswordInput = (props) => {
 
     return(
         <div className="form-group">
-        <label htmlFor="exampleInputPassword1">Password</label>
-        <input className="form-control" 
+        {/* <label className="mr-sm-2" htmlFor="exampleInputPassword1">Password</label> */}
+        <input className="form-control input-sm mb-2 mr-sm-2" 
                id="exampleInputPassword1" 
                onChange={onPasswordChange}
                placeholder="Password" 
