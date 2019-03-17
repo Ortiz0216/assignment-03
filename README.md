@@ -54,6 +54,7 @@ The things we need to do then are:
     * Authentication
     * Cloud Database
 12. Use Redux for an MVC-like structure (modeled on Facebook's "Flux" architecture)
+    * It quickly becomes evident why a central state store is needed as sending props down and state up gets VERY confusing eventually...
 13. Add tests (should have been done in Chapter 9)
 
 

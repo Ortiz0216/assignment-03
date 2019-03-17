@@ -23,9 +23,6 @@ class OrderHistory extends Component{
 
     componentDidMount(){
 
-        console.log(component_name, 
-                    "I AM IN COMPONENT WILL MOUNT");
-
         //read email from props and store
         let ordersInquiry = {
             email: this.props.email,

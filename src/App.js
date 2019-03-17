@@ -7,6 +7,7 @@ import JumbotronComponent from './Components/Header/JumbotronComponent';
 import MapboxMap from './Components/Location/MapboxMap';
 import Navbar from './Components/Header/Navbar';
 import PizzaForm from './Components/PizzaOrder/PizzaForm';
+import PizzaPlace from './Components/PizzaPlaces/PizzaPlace';
 import PizzaPlaces from './Components/PizzaPlaces/PizzaPlaces';
 import OrderHistory from './Components/PizzaOrder/OrderHistory';
 import firebase from './Services/Firebase';
@@ -30,10 +31,12 @@ class App extends Component {
             lng: -98.5795,  //US geographic center lng
             lat: 39.828175, //US geographic center lat
             user: {
-                uid: '',                
+                uid: '',
+                //use the logged in user or nobody                
                 userEmail: firebase.auth().currentUser ? firebase.auth().currentUser : '',
                 userAuthenticated: false
-            }
+            },
+            pizza_place: '',
         };
 
         //bind methods to the class
@@ -41,6 +44,7 @@ class App extends Component {
         this.handleLoginFormSubmission = this.handleLoginFormSubmission.bind(this);
         this.handleLogoutFormSubmission = this.handleLogoutFormSubmission.bind(this);        
         this.handleMapCoordsUpdate = this.handleMapCoordsUpdate.bind(this);
+        this.handleSentRandomPlace = this.handleSentRandomPlace.bind(this);
         
         //composite pages for routing
         this.HomePage = this.HomePage.bind(this);
@@ -123,7 +127,7 @@ class App extends Component {
                     }
                 );
             });
-        }else{
+        } else {
             console.log(component_name, 
                         "Geolocation is not supported by this browser.");
         }
@@ -156,6 +160,7 @@ class App extends Component {
 
         const { email, password, } = user;
 
+        //sign into firebase using the auth service there
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((user) => {
                 
@@ -204,6 +209,16 @@ class App extends Component {
             });
 
     }
+
+    /**
+     * Handle a randomly-selected place from the places API
+     * @param {*} place 
+     */
+    handleSentRandomPlace(place) {
+        this.setState({
+            pizza_place: place,
+        });
+    }    
     
     // PAGES //////////////////////////////////////////////////////////////////
     /**
@@ -227,7 +242,8 @@ class App extends Component {
                                     lat: lat,
                                     lng: lng,
                                 }}
-                                title="Nearby Pizza Locations" />
+                                title="Nearby Pizza Locations"
+                                sendRandomPlace={this.handleSentRandomPlace} />
                 </div>   
             </React.Fragment>            
         );
@@ -238,33 +254,36 @@ class App extends Component {
      */
     OrderPage() {
 
-        //destructuring the state object
-        const { lng, lat, } = this.state;        
-
         let pizza_form;
+        let pizza_place;
 
         if(this.state.user.userAuthenticated){
+
+            if(this.state.pizza_place){
+                pizza_place =   <div className="card-columns">
+                                    <PizzaPlace key={this.state.pizza_place.id} 
+                                                placedata={this.state.pizza_place} />
+                                </div> 
+            }
+            else{
+                pizza_place = <div></div>;
+            }
+
             pizza_form = <div className="row">
-                            <PizzaForm />
+                            <PizzaForm email={this.state.user.userEmail}
+                                       place={this.state.pizza_place} />
+                            {pizza_place}                                       
                          </div>;
+
         }else{
             pizza_form = <div className="row"><p>You must be logged in to order.</p></div>;
-
-        }        
+        }
 
         return(
             <React.Fragment>
                 <div className="row">
                     {pizza_form}
                 </div>
-                <div className="row">
-                    <PizzaPlaces coords={
-                                {
-                                    lat: lat,
-                                    lng: lng,
-                                }}
-                                title="Nearby Pizza Locations" />
-                </div> 
             </React.Fragment>            
         );     
 

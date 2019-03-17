@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-
+import { Redirect } from "react-router-dom";
+import { AddOrder } from '../../Services/DB';
 import PizzaEntry from './PizzaEntry';
+
+const component_name = "PIZZA_FORM";
 
 class PizzaForm extends Component{
     //constructor
@@ -10,43 +13,70 @@ class PizzaForm extends Component{
         this.initialState = {       
             order_date: new Date(),
             pizza_type: '',
+            pizza_price: '',
+            order_placed: false,
         }
 
         this.state = this.initialState;
 
         //associate method as property
-        this.handleOrderSubmit   = this.handleOrderSubmit.bind(this);
         this.handleSelectedPizza   = this.handleSelectedPizza.bind(this);
+
+        console.log("{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}} ===>", this.props.place.title);
+        console.log("{{{{{{{{{{{{{{{{{}}}}}}}}}}}}}}}}}} ===>", this.props.email);        
     };
-
-    handleOrderSubmit(){
-
-        //we'd save to the database here in the future
-
-        const order = {
-            customer_email: this.state.customer_email,            
-            delivery_zipcode: this.state.delivery_zipcode,
-            order_date: new Date(),
-            pizza_type: this.state.pizza_type,
-        };
-
-        this.props.onSubmit(order);
-
-    }
     
-    handleSelectedPizza(selected_pizza){
+    handleSelectedPizza(pizza_selection){
 
-        const pizza_type = selected_pizza;
+        const {pizza, price} = pizza_selection;
+
+        console.log("HANDLE_SELECTED_PIZZA ===>", pizza);          
+        console.log("HANDLE_SELECTED_PIZZA ===>", price);
 
         this.setState( () => {
                 return {
-                    pizza_type
+                    pizza_type: pizza,
+                    pizza_price: price,
                 }                
             }
         );
+
+        //read email from props and store
+        let orderRequest = {
+            order: { 
+                email: this.props.email,
+                pizza: pizza,
+                price: price,
+                date:  this.state.order_date,
+                place: this.props.place.title,
+            },
+            //by passing this method into the firebase method, we will use it to
+            //receive data from the firebase cloud firestore
+            callback: () => {
+
+                this.setState(
+                    {
+                        order_placed: true,
+                    }
+                );                
+            }
+        }
+    
+        //call the DB method
+        AddOrder(orderRequest);
+
     }
 
     render() {
+        
+        if(this.state.order_placed === true) {
+            //flip it back
+            this.setState({
+                order_placed: false,
+            });
+            return <Redirect to='/history' />
+        }
+
         return (
             <div>
                 <div className="card-group">

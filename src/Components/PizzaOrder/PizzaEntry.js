@@ -23,12 +23,18 @@ class PizzaEntry extends Component {
         //badge badge-success
         this.setState( () => {
                 return {
-                    style_value: "btn btn-lg btn-block btn-success"
+                    style_value: "btn btn-lg btn-block btn-success",
+                    selected_pizza: this.props.pizza_type,
                 }
             }
-        );        
+        );   
 
-        this.props.onClick(event.target.value);
+        let pizza_selection = {
+            pizza: this.props.pizza_type + " Pizza",
+            price: this.state.selected_pizza_price,
+        };
+
+        this.props.onClick(pizza_selection);
     }
 
     render() {
@@ -44,7 +50,7 @@ class PizzaEntry extends Component {
                     <p className="card-text text-center"><strong>YOUR PRICE:</strong> ${this.state.selected_pizza_price}</p>
                     <button className={this.state.style_value}
                             onClick={this.handleSelectedPizzaButtonClick}
-                            value={selected_pizza} >
+                            value={this.selected_pizza} >
                         Select {this.props.pizza_type} Pizza
                     </button>
                 </div>

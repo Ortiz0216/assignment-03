@@ -34,6 +34,7 @@ class PizzaPlaces extends Component{
             //make rest call
             this.getPizzaPlacesFromHereAPI();    
         }
+
     }      
 
     getPizzaPlacesFromHereAPI(){
@@ -81,6 +82,13 @@ class PizzaPlaces extends Component{
           })
           .then( (filtered) => {
     
+            const places = this.state.pizza_place_list;
+
+            //get a random pizza place and set the parent state with it            
+            if(places.length > 0){
+                this.props.sendRandomPlace(places[Math.floor(Math.random() * places.length)]);
+            }   
+
             this.state.pizza_place_list.forEach( (pizza_place) => {
                 const pizzalocation = pizza_place.title + ' ' +
                                       pizza_place.vicinity + ' ' +
@@ -96,6 +104,7 @@ class PizzaPlaces extends Component{
     render(){
 
         const places = this.state.pizza_place_list;
+
         return(
             <div>
                 <h1>{this.props.title}</h1> 
