@@ -15,7 +15,7 @@ const config = {
 
 //ensure that no more than one firebase is instantiated
 if (!firebase.apps.length) {
-    let app = firebase.initializeApp(config);
+    firebase.initializeApp(config);
 }
 
 export default firebase;

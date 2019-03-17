@@ -1,15 +1,15 @@
 //npm imports
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 //my imports
-import JumbotronComponent from './Components/JumbotronComponent';
-import MapboxMap from './Components/MapboxMap';
-import Navbar from './Components/Navbar';
-import PizzaForm from './Components/PizzaForm';
-import PizzaPlaces from './Components/PizzaPlaces';
-import OrderHistory from './Components/OrderHistory';
-import firebase from './Firebase';
+import JumbotronComponent from './Components/Header/JumbotronComponent';
+import MapboxMap from './Components/Location/MapboxMap';
+import Navbar from './Components/Header/Navbar';
+import PizzaForm from './Components/PizzaOrder/PizzaForm';
+import PizzaPlaces from './Components/PizzaPlaces/PizzaPlaces';
+import OrderHistory from './Components/PizzaOrder/OrderHistory';
+import firebase from './Services/Firebase';
 import './App.css';
 
 const component_name = "APP COMPONENT";
@@ -31,7 +31,7 @@ class App extends Component {
             lat: 39.828175, //US geographic center lat
             user: {
                 uid: '',                
-                userEmail: '',
+                userEmail: firebase.auth().currentUser ? firebase.auth().currentUser : '',
                 userAuthenticated: false
             }
         };
@@ -45,6 +45,8 @@ class App extends Component {
         //composite pages for routing
         this.HomePage = this.HomePage.bind(this);
         this.OrderPage = this.OrderPage.bind(this);
+        this.AboutPage = this.AboutPage.bind(this);
+        this.OrderHistoryPage = this.OrderHistoryPage.bind(this);
 
         //what to do when authenticated
         //this example was useful: https://github.com/firebase/quickstart-js/blob/master/auth/email-password.html
@@ -96,6 +98,9 @@ class App extends Component {
 
     // LIFECYCLE METHODS //////////////////////////////////////////////////////    
     //run prior to mounting - useful to get initial LAT/LON from browser
+    /**
+     * Lifecycle method - runs just before monuting a component
+     */
     componentWillMount(){
         //get location from browser
         this.setCurrentLocation();
@@ -212,7 +217,9 @@ class App extends Component {
         return(
             <React.Fragment>
                 <div className="row py-2">
-                    <MapboxMap sendMapCoordsUpdate={this.handleMapCoordsUpdate} />
+                    <MapboxMap lng={lng}
+                               lat={lat}
+                               sendMapCoordsUpdate={this.handleMapCoordsUpdate} />
                 </div>        
                 <div className="row">
                     <PizzaPlaces coords={
@@ -280,6 +287,18 @@ class App extends Component {
         )
     }
 
+    /**
+     * ORDER HISTORY PAGE composite component
+     */
+    OrderHistoryPage(){
+
+        console.log(component_name, this.state.user.userEmail);
+
+        return(
+            <OrderHistory email={this.state.user.userEmail} />
+        )
+    }
+
 
     render() {
 
@@ -304,9 +323,12 @@ class App extends Component {
                     <Route path="/register" component="{RegisterPage}" />
                     <Route path="/me" component={ProfilePage} /> */}
 
+                    {/* take note that what is happening here is that the router
+                        renders the content here in this space.  The Navbar and Jumbotron
+                        stay in the same place on each page. */}
                     <Route path="/" exact component={this.HomePage} />
                     <Route path="/order" component={this.OrderPage} />
-                    <Route path="/order" component={this.OrderHistory} />                    
+                    <Route path="/history" component={this.OrderHistoryPage} />
                     <Route path="/about" component={this.AboutPage} />
                 </div>
             </div>            

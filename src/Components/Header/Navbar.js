@@ -1,11 +1,11 @@
 //npm imports
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //my imports
-import LoginForm from './LoginForm';
-import LogoutForm from './LogoutForm';
-import firebase from '../Firebase';
+import LoginForm from '../Login/LoginForm';
+import LogoutForm from '../Login/LogoutForm';
+import firebase from '../../Services/Firebase';
 
 const Navbar = (props) => {
 
@@ -24,15 +24,18 @@ const Navbar = (props) => {
 
     return(
         <div className="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-            <a class="navbar-brand" href="#">Pizza Bandit!</a>                    
-            <ul class="nav navbar-nav mr-auto" >
-                <li class="nav-item">
+            <a className="navbar-brand" href="#">Pizza Bandit!</a>                    
+            <ul className="nav navbar-nav mr-auto" >
+                <li className="nav-item">
                     <Link className="nav-link" to="/">Home</Link>
                 </li>                    
-                <li class="nav-item">
+                <li className="nav-item">
                     <Link className="nav-link" to="/order">Order</Link>
                 </li>
-                <li class="nav-item">
+                <li className="nav-item">
+                    <Link className="nav-link" to="/history">History</Link>
+                </li>                
+                <li className="nav-item">
                     <Link className="nav-link" to="/about">About</Link>
                 </li>                                        
             </ul>
